@@ -89,10 +89,14 @@ def get_Affine_Location(src_img,Net_img,contours,cutImg_name,cutImg_path):
         if len(roi_contours)<4:continue
 
         src_img1 = cv2.rectangle(src_img, (x1, y1),(x1+w1,y1+h1), (0,255,0), 2)
-        cut_img = src_img[y1:y1+h1,x1:x1+w1]
-        cv2.imwrite(cutImg_path+'/'+cutImg_name+'_'+str(i)+'.png',cut_img)      # 保存截取的图片
-        # cv2.imshow('src_img_'+str(i),src_img1)
-        cv2.waitKey(0)
+        if w1>400 and h1>50:
+            cut_img = src_img[y1:y1+h1,x1:x1+w1]
+            copy_src_img = src_img.copy()
+            copy_src_img[y1:y1+h1,x1:x1+w1]=255
+            cv2.imwrite(cutImg_path+'/'+cutImg_name+'_'+str(i)+'.png',cut_img)      # 保存截取的图片
+            # cv2.imwrite(cutImg_path+'/'+cutImg_name+'____'+str(i)+'.png',copy_src_img)      # 保存截取的图片
+            # cv2.imshow('src_img_'+str(i),src_img1)
+            cv2.waitKey(0)
     cv2.destroyAllWindows()
 
     # =========================绘出最大轮廓凸包并矫正图像==========================

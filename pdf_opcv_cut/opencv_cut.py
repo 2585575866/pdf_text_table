@@ -50,6 +50,7 @@ def getVProjection(image):
 if __name__ == "__main__":
     # 读入原始图像
     root_dir = "../data/input"
+    i=0
     for root,dirs,files in os.walk(root_dir):
         for file in files:
             file_path = os.path.join(root,file)
@@ -73,11 +74,11 @@ if __name__ == "__main__":
             W_Start = 0
             W_End = 0
             for j in range(len(W)):
-                if W[j] > 15 and Wstart == 0:
+                if W[j] > 20 and Wstart == 0:
                     W_Start = j
                     Wstart = 1
                     Wend = 0
-                if W[j] < 15 and Wstart == 1:
+                if W[j] < 20 and Wstart == 1:
                     W_End = j
                     Wstart = 0
                     Wend = 1
@@ -93,7 +94,16 @@ if __name__ == "__main__":
             for m in range(len(Position)):
                 # cv2.rectangle(origineImage, (Position[m][0], Position[m][1]), (Position[m][2], Position[m][3]), (0, 229, 238),1)
                 new_image = origineImage[Position[m][1]:Position[m][3],Position[m][0]:Position[m][2]]
+                new_image_shape = new_image.shape
+                weight= new_image_shape[0]
+                print(new_image_shape)
+                half_weight =  int(weight/2)
+                new_image1 =new_image[0:half_weight,:]
+                new_image2 =new_image[half_weight:,:]
                 #保存到指定目录
-                cv2.imwrite(output_dir + str(m) + ".png", new_image)
+                cv2.imwrite(output_dir + str(i) + ".png", new_image1)
+                i=i+1
+                cv2.imwrite(output_dir + str(i) + ".png", new_image2)
+                i=i+1
                 # cv2.imshow('image', new_image)
                 cv2.waitKey(0)
