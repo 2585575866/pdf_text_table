@@ -50,9 +50,10 @@ def getVProjection(image):
 if __name__ == "__main__":
     # 读入原始图像
     root_dir = "../data/input"
-    i=0
+
     for root,dirs,files in os.walk(root_dir):
         for file in files:
+            i=0
             file_path = os.path.join(root,file)
             origineImage = cv2.imread(file_path)
             # 图像灰度化
@@ -96,8 +97,9 @@ if __name__ == "__main__":
                 new_image = origineImage[Position[m][1]:Position[m][3],Position[m][0]:Position[m][2]]
                 new_image_shape = new_image.shape
                 weight= new_image_shape[0]
-                print(new_image_shape)
+                # print(new_image_shape)
                 half_weight =  int(weight/2)
+                # cv2.imwrite(output_dir + str(i) + "---.png", new_image)
                 new_image1 =new_image[0:half_weight,:]
                 new_image2 =new_image[half_weight:,:]
                 #保存到指定目录
@@ -107,3 +109,5 @@ if __name__ == "__main__":
                 i=i+1
                 # cv2.imshow('image', new_image)
                 cv2.waitKey(0)
+            # break
+        # break
